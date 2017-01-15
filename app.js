@@ -3,7 +3,6 @@
 
     angular.module('Assignment3',[])
     .controller('NarrowItDownController', NarrowItDownController)
-//    .factory('menuSearchFactory', MenuSearchFactory)
     .service('MenuSearchService', MenuSearchService)
     .constant('ApiBasePath', "http://davids-restaurant.herokuapp.com")
     .directive('foundItems', FoundItemsDirective);
@@ -25,13 +24,16 @@
 
    function NarrowItDownDirectiveController() {
        var narrow = this;
+
+       narrow.isEmpty = function (searchTerm) {
+           if (narrow.items.length > 0 || searchTerm ==="") return false;
+           return true;
+       }
    }
 
         NarrowItDownController.$inject=['MenuSearchService'];
         function NarrowItDownController (MenuSearchService) {
             var narrow = this;
-
-     //       var menuList = MenuSearchFactory();
 
             narrow.items = [];
 
@@ -51,8 +53,7 @@
             };
 
             narrow.removeItem = function (itemIndex) {
-              //  menuList.removeItem(itemIndex);
-              narrow.items.splice(itemIndex, 1);
+               narrow.items.splice(itemIndex, 1);
             }
         }
 
@@ -61,13 +62,13 @@
         function MenuSearchService ($http, ApiBasePath) {
             var service = this;
 
-            var foundItems = [];  
+        //    var foundItems = [];  
 
             service.GetMatchedMenuItems = function (searchTerm) {
             return $http({
                 url: (ApiBasePath + "/menu_items.json")
             }).then(function (result) {                 // process result and only keep items that match
-                // var foundItems = [];  
+                 var foundItems = [];  
                 for (var i = 0; i < result.data.menu_items.length; i++) {
                       if (result.data.menu_items[i].name.toLowerCase().indexOf(searchTerm) !== -1) {
                              foundItems.push(result.data.menu_items[i]);
@@ -76,19 +77,6 @@
                  return foundItems;                      // return processed items
              });
         };  
-
-        // service.removeItem = function (itemIndex) {
-        //     console.log(itemIndex);
-        //     foundItems.splice(itemIndex, 1);
-        // };       
-         
     }
-
-    // function MenuSearchFactory() {
-    //     var factory = function () {
-    //       return new MenuSearchService();
-    //     };
-    //  return factory;
-    // }
 
 })();
