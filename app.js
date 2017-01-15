@@ -70,7 +70,7 @@
         //    var foundItems = [];  
 
             service.GetMatchedMenuItems = function (searchTerm) {
-            return $https({
+            return $http({
                 url: (ApiBasePath + "/menu_items.json")
             }).then(function (result) {                 // process result and only keep items that match
                  var foundItems = [];  
