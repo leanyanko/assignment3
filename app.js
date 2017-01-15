@@ -41,7 +41,7 @@
 
             narrow.items = [];
 
-            narrow.title = "There are your list";
+            narrow.title = "Your list:";
             
             narrow.findItems = function (searchTerm) {
                 var promise = MenuSearchService.GetMatchedMenuItems(searchTerm);
