@@ -25,9 +25,13 @@
    function NarrowItDownDirectiveController() {
        var narrow = this;
 
-       narrow.isEmpty = function (searchTerm) {
-           if (narrow.items.length > 0 || searchTerm ==="") return false;
-           return true;
+       narrow.isEmpty = function () {
+           if (narrow.items.length === 0 && !narrow.searchTermEmpty 
+                || narrow.searchTermEmpty) 
+                    return true;
+            return false;
+        //    if (narrow.items.length > 0 && !narrow.searchTermEmpty || narrow.searchTermEmpty) return false;
+        //    return true;
        }
    }
 
@@ -38,13 +42,14 @@
             narrow.items = [];
 
             narrow.title = "There are your list";
-
+            
             narrow.findItems = function (searchTerm) {
                 var promise = MenuSearchService.GetMatchedMenuItems(searchTerm);
 
                 promise.then(function (response) {
 
                 narrow.items = response;
+                narrow.searchTermEmpty = searchTerm ==="";
                 console.log(narrow.items);
                 })
                 .catch(function (error) {
