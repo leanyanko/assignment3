@@ -22,16 +22,21 @@
     <div>
       </br>
     </div>
-      <div>
+      <!--<div>
       <ul>
         <li ng-repeat="item in narrow.items">
-          {{ item }}
+          {{ item.name }}
         </li>
       </ul>
-      </div>
+      </div>-->
 
     <!-- found-items should be implemented as a component -->
-    <found-items found-items="narrow.items" on-remove="narrow.removeItem(index)"></found-items>
+    <found-items 
+        
+        items="narrow.items"
+        title="{{narrow.title}}"
+        on-remove="narrow.removeItem(index)">
+    </found-items>
   </div>
 
 </body>

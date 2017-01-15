@@ -1,0 +1,7 @@
+<h3>{{ narrow.title }}</h3>
+<ol>
+  <li ng-repeat="item in narrow.items">
+    {{ item.name }} 
+    <button ng-click="narrow.onRemove({index: $index});">I don't want it!</button>
+  </li>
+</ol>
