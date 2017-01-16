@@ -13,7 +13,8 @@
            scope: {
                items: '<',
                title: '@title',
-               onRemove: '&'
+               onRemove: '&',
+               displayNothing: '<'
            },
            controller: NarrowItDownDirectiveController,
            controllerAs: 'narrow',
@@ -26,12 +27,7 @@
        var narrow = this;
 
        narrow.isEmpty = function () {
-           if (narrow.items.length === 0 && !narrow.searchTermEmpty 
-                || narrow.searchTermEmpty) 
-                    return true;
-            return false;
-        //    if (narrow.items.length > 0 && !narrow.searchTermEmpty || narrow.searchTermEmpty) return false;
-        //    return true;
+           return narrow.displayNothing;
        }
    }
 
@@ -39,6 +35,7 @@
         function NarrowItDownController (MenuSearchService) {
             var narrow = this;
 
+            narrow.displayNothing = false;
             narrow.items = [];
 
             narrow.title = "Your list:";
@@ -49,7 +46,8 @@
                 promise.then(function (response) {
 
                 narrow.items = response;
-                narrow.searchTermEmpty = searchTerm ==="";
+                narrow.displayNothing = (searchTerm !=="" && narrow.items.length === 0 
+                                            || searchTerm === "" || searchTerm === " ");
                 console.log(narrow.items);
                 })
                 .catch(function (error) {
